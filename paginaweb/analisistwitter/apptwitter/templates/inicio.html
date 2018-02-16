@@ -1,0 +1,80 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>A W E T</title>
+  <!-- BOOTSTRAP CORE STYLE  -->
+  <link href="{%static 'nuevo/assets/css/bootstrap.css'%}" rel="stylesheet" />
+  <!-- FONT AWESOME ICONS  -->
+  <link href="{%static 'nuevo/assets/css/font-awesome.css'%}" rel="stylesheet" />
+  <!-- CUSTOM STYLE  -->
+  <link href="{%static 'nuevo/assets/css/style.css'%}" rel="stylesheet" />
+    <script src="{%static 'nuevo/assets/js/jquery-1.11.1.js'%}"></script>
+</head>
+<body>
+  <div class="origin">
+    <div class="navbar navbar-inverse set-radius-zero">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+          <a class="navbar-brand" href="#">
+
+                  <img class="img-circle" style="height:5em;" src="{%static 'imagen.jpg'%}" alt="">
+                </a>
+        </div>
+        <div class="left-div">
+          <h2 style="color:white;">A W E T</h2>
+          <br>
+        </div>
+      </div>
+    </div>
+    <!-- LOGO HEADER END-->
+    <section class="menu-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="navbar-collapse collapse ">
+              <ul id="menu-top" class="nav navbar-nav navbar-right">
+                <li><a class="menu-top-active" href="/index">Inicio</a></li>
+                <li><a href="/subirdocumento">Carga de Archivos</a></li>
+                <li><a href="/expedientes">Expedientes</a></li>
+                <li><a href="/cerrar_sesion">Cerrar Sesión</a></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="content-wrapper">
+      <div class="container">
+        {%block contenido%} {%endblock%}
+
+      </div>
+    </div>
+
+    <footer style="margin-top:5em;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            &copy; Edison Chavez
+          </div>
+
+        </div>
+      </div>
+    </footer>
+
+    <script src="{%static 'nuevo/assets/js/bootstrap.js'%}"></script>
+  </div>
+</body>
+
+</html>

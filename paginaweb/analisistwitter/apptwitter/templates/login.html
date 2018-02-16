@@ -1,0 +1,175 @@
+{%load static%}
+﻿<!DOCTYPE html>
+<html xmlns="">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>A W E T</title>
+    <!-- BOOTSTRAP CORE STYLE  -->
+    <link href="{%static 'nuevo/assets/css/bootstrap.css'%}" rel="stylesheet" />
+    <!-- FONT AWESOME ICONS  -->
+    <link href="{%static 'nuevo/assets/css/font-awesome.css'%}" rel="stylesheet" />
+    <!-- CUSTOM STYLE  -->
+    <link href="{%static 'nuevo/assets/css/style.css'%}" rel="stylesheet" />
+</head>
+<body>
+    <div class="origin">
+    <!-- HEADER END-->
+    <div class="navbar navbar-inverse set-radius-zero">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <img class="img-circle" style="height:5em;" src="{%static 'imagen.jpg'%}" alt="">
+                </a>
+            </div>
+            <div class="left-div">
+                <i class="fa fa-user-plus login-icon" ></i>
+        </div>
+            </div>
+        </div>
+    <!-- LOGO HEADER END-->
+
+    <!-- MENU SECTION END-->
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="page-head-line">Ingrese sus Credenciales</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                   <h4> Ingresa con Google :</h4>
+                    <br />
+                    <a href="{% url "social:begin" "google-oauth2" %}" class="btn btn-social btn-google">
+                            <i class="fa fa-google-plus"></i>&nbsp; Cuenta de Google</a>
+                            <!--
+                    O
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">  <i class="fa fa-plus"></i>&nbsp; R E G I S T R A T E</button>
+
+                    <hr />
+                     <h4> o Ingresa con una cuenta de <strong>AWET :</strong></h4>
+                    <br />
+
+                    <form action="/validarsesion" method="POST">
+                      {%csrf_token%}
+                      <label>Ingrese su usuario : </label>
+                         <input type="text" class="form-control" name="usuario"/>
+                         <label>Ingrese la contraseña :  </label>
+                         <input type="password" class="form-control" name="password"/>
+                         <hr />
+                         <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-user"></span> &nbsp;Ingresar </button>&nbsp;
+                    </form>
+-->
+                </div>
+                <div class="col-md-6">
+                    <div class="alert alert-info">
+                        Análiza todos los documentos con informacion de Twitter
+                        <br />
+                         <strong> Algunos Datos Importantes:</strong>
+                        <ul>
+                            <li>
+                                Documentos analizados por Google :
+                            </li>
+                            <li>
+                                Documentos analizados por carga de archivos :
+                            </li>
+                            <li>
+                                Total de documentos analizados:
+                            </li>
+
+                        </ul>
+
+                    </div>
+                    <div class="alert alert-success">
+                         <strong> Información:</strong>
+                        <ul>
+                            <li>
+                               Lorem ipsum dolor sit amet ipsum dolor sit ame
+                            </li>
+                            <li>
+                                 Aamet ipsum dolor sit ame
+                            </li>
+                            <li>
+                               Lorem ipsum dolor sit amet ipsum dolor
+                            </li>
+                            <li>
+                                 Cpsum dolor sit ame
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- CONTENT-WRAPPER SECTION END-->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    &copy; Edison Chavez
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> R E G I S T R O</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="/registrar" method="POST">
+              {%csrf_token%}
+              <div class="form-group">
+                <label for="recipient-name" class="form-control-label">Nombres:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre">
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="form-control-label">Apellidos:</label>
+                <input type="text" class="form-control" id="apellido" name="apellido">
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="form-control-label">Correo:</label>
+                <input type="email" class="form-control" id="correo" name="correo">
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="form-control-label">Usuario:</label>
+                <input type="text" class="form-control" id="usuario" name="usuario">
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="form-control-label">Contraseña:</label>
+                <input type="password" class="form-control" id="password" name="password">
+              </div>
+              <button type="submit" class="btn btn-primary">Registrar</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{%static 'nuevo/assets/js/jquery-1.11.1.js'%}"></script>
+
+    <script src="{%static 'nuevo/assets/js/bootstrap.js'%}"></script>
+    </div>
+</body>
+</html>

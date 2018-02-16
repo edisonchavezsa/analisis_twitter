@@ -1,0 +1,38 @@
+{%extends 'inicio.html'%}
+{%block contenido%}
+<div class="row">
+  <div class="col-md-12">
+    <h4 class="page-head-line">Inicio</h4>
+  </div>
+</div>
+{%if documentonumero == 0%}
+<div class="row">
+  <div class="col-md-12">
+    <div class="alert alert-danger">
+      Usted todavía no ha cargado ningún documento
+    </div>
+    <a href="/subirdocumento" rol="button" class="btn btn-warning">Empezar a cargar</a>
+  </div>
+</div>
+{%else%}
+<div class="row">
+  <h3>Ultimos Documentos Analizados en Google</h3>
+  {%for d in lista_documentos%}
+  <div class="col-md-3 col-sm-3 col-xs-6">
+  <div class="dashboard-div-wrapper bk-clr-three">
+      <i class="fa fa-bell-o dashboard-div-icon"></i>
+      <div class="progress progress-striped active">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+        </div>
+      </div>
+      <h5>Nombre del archivo:</h5>
+      <h3>{{d.nombre_archivo}}</h3>
+      <h5>Fecha del ultimo análisis:</h5>
+      <h3>{{d.fechaingreso}}</h3>
+      <!--<button type="button" name="button" class="btn btn-warning">Volver Analizar</button>-->
+    </div>
+  </div>
+  {%endfor%}
+</div>
+{%endif%}
+{%endblock%}

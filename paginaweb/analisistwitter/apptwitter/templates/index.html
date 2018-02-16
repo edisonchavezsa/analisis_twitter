@@ -1,0 +1,560 @@
+{%load static%}
+<!DOCTYPE html>
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+  <!-- BASICS -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>AWET</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="inicio/css/isotope.css'%}" media="screen" />
+  <link rel="stylesheet" href="{%static 'inicio/js/fancybox/jquery.fancybox.css'%}" type="text/css" media="screen" />
+  <link rel="stylesheet" href="{%static 'inicio/css/bootstrap.css'%}">
+  <link rel="stylesheet" href="{%static 'inicio/css/bootstrap-theme.css'%}">
+  <link rel="stylesheet" href="{%static 'inicio/css/style.css'%}">
+  <!-- skin -->
+  <link rel="stylesheet" href="{%static 'inicio/skin/default.css'%}">
+  <script src="{%static 'js/filepicker.js'%}"></script>
+  <script>
+    function initPicker() {
+      var picker = new FilePicker({
+        apiKey: 'AIzaSyDOXFMygvHTaiGDUK_gUKQY0gwVK7ljg_I',
+        clientId: '865817351421-jkvhllf8b1jfdbtoic9deb2lk9jomgkf',
+        buttonEl: document.getElementById('pick'),
+        onSelect: function(file) {
+          console.log(file);
+          $("#urlarchivo").val(file.id);
+          $("#nombrearchivo").val(file.title)
+          $("#btnanalisis").removeAttr("disabled");
+        }
+      });
+    }
+  </script>
+
+  <script src="https://www.google.com/jsapi?key=AIzaSyDOXFMygvHTaiGDUK_gUKQY0gwVK7ljg_I"></script>
+  <script src="https://apis.google.com/js/client.js?onload=initPicker"></script>
+  <style>
+/* Center the loader */
+#loader {
+  position: sticky;
+  left: 45%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -15px 0 0 -25px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 }
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom {
+  from{ bottom:-100px; opacity:0 }
+  to{ bottom:0; opacity:1 }
+}
+
+#myDiv {
+  display: none;
+  text-align: center;
+}
+</style>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable({{lista|safe}});
+
+        var options = {
+          title: 'Tweets Recolectados por Fecha:Promedio por Día {{promedio}} Tweets'
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable({{listausuarios|safe}});
+
+        var options = {
+          title: 'Número de Tweets publicados por Usuario',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+      }
+    </script>
+    <script type='text/javascript'>
+        google.charts.load('current', {
+          'packages': ['geochart'],
+          // Note: you will need to get a mapsApiKey for your project.
+          // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+          'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+        });
+        google.charts.setOnLoadCallback(drawMarkersMap);
+
+         function drawMarkersMap() {
+         var data = google.visualization.arrayToDataTable({{listapaises|safe}});
+
+         var options = {
+
+         };
+
+         var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+         chart.draw(data, options);
+       };
+       </script>
+       <script type="text/javascript">
+       google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(drawBasic);
+
+        function drawBasic() {
+
+            var data = google.visualization.arrayToDataTable({{listaseguidores|safe}});
+
+            var options = {
+              title: 'Número de seguidores por usuario',
+              chartArea: {width: '50%'},
+              hAxis: {
+                title: 'Total de seguidores',
+                minValue: 0
+              },
+              vAxis: {
+                title: 'Usuarios'
+              }
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('chart_div_barra'));
+
+            chart.draw(data, options);
+          }
+       </script>
+       <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script>
+  zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+  ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+</script>
+<link href="https://fonts.googleapis.com/css?family=Crete+Round" rel="stylesheet">
+</head>
+
+<body>
+
+  <section id="header" class="appear"></section>
+  <div class="navbar navbar-fixed-top" role="navigation" data-0="line-height:100px; height:100px; background-color:rgba(0,0,0,0.3);" data-300="line-height:60px; height:60px; background-color:rgba(0,0,0,1);">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="fa fa-bars color-white"></span>
+					</button>
+        <h1><a class="navbar-brand" href="index.html" data-0="line-height:90px;" data-300="line-height:50px;">			AWET
+					</a></h1>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
+          <li class="active"><a href="#">Inicio</a></li>
+          <li><a href="#section-about">Datos</a></li>
+          <li><a href="#section-works">Gráficas</a></li>
+          <li><a href="#section-contact">Contact</a></li>
+        </ul>
+      </div>
+      <!--/.navbar-collapse -->
+    </div>
+  </div>
+
+  <section class="featured">
+    <div class="container">
+      <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#inicio">Cargar Achivos de Google</a></li>
+    <li><a data-toggle="tab" href="#menu1">Cargar Archivos</a></li>
+    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="inicio" class="tab-pane fade in active">
+      <div class="col-md-12 col-md-offset-0"><br>
+        <form class="form-horizontal" role="form" action="/analizar" method="POST" id="formgoogle">
+          {%csrf_token%}
+          <div class="form-group">
+            <div class="input-group">
+               <input type="text" class="form-control" id="nombrearchivo" readonly required>
+               <input type="hidden" class="form-control" name="urlarchivo" id="urlarchivo" readonly required>
+               <span class="input-group-btn">
+                    <button class="btn btn-success" type="button" id="pick">Cargar Archivo</button>
+               </span>
+            </div>
+
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-0 col-sm-10">
+              <button type="submit" class="btn btn-default" id="btnanalisis" disabled>Analizar Documento</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h3>Menu 1</h3>
+      <p>Some content in menu 1.</p>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Some content in menu 2.</p>
+    </div>
+  </div>
+    </div>
+  </section>
+
+  <!-- services -->
+  <section id="section-services" class="section pad-bot30 bg-white">
+    <div class="container">
+
+      <div class="row mar-bot40">
+        <div class="col-lg-4">
+          <div class="align-center">
+            <i class="fa fa-code fa-5x mar-bot20"></i>
+            <h4 class="text-bold">Valid HTML5</h4>
+            <p>Lorem ipsum dolor sit amet, mutat graeco volumus ad eam, singulis patrioque comprehensam nam no. Mei cu dicat voluptaria volumus.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="align-center">
+            <i class="fa fa-terminal fa-5x mar-bot20"></i>
+            <h4 class="text-bold">Responsive</h4>
+            <p>Lorem ipsum dolor sit amet, mutat graeco volumus ad eam, singulis patrioque comprehensam nam no. Mei cu dicat voluptaria volumus.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="align-center">
+            <i class="fa fa-bolt fa-5x mar-bot20"></i>
+            <h4 class="text-bold">Customizable</h4>
+            <p>Lorem ipsum dolor sit amet, mutat graeco volumus ad eam, singulis patrioque comprehensam nam no. Mei cu dicat voluptaria volumus.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- spacer section:testimonial -->
+  <section id="testimonials" class="section" data-stellar-background-ratio="0.5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="align-center">
+            <div class="testimonial pad-top40 pad-bot40 clearfix">
+              <h5>
+        								Nunc velit risus, dapibus non interdum quis, suscipit nec dolor. Vivamus tempor tempus mauris vitae fermentum. In vitae nulla lacus. Sed sagittis tortor vel arcu sollicitudin nec tincidunt metus suscipit.Nunc velit risus, dapibus non interdum.
+        							</h5>
+              <br/>
+              <span class="author">&mdash; MIKE DOE <a href="#">www.siteurl.com</a></span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- about -->
+  <section id="section-about" class="section appear clearfix">
+    <div class="container">
+
+      <div class="row mar-bot40">
+        <div class="col-md-offset-3 col-md-6">
+          <div class="section-header">
+            <h2 class="section-heading animated" data-animation="bounceInUp">Nube de Palabras</h2>
+            <p>Se encuentran las palabras más mencionadas en los tweets</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div id="myChart"></div>
+      </div>
+
+    </div>
+  </section>
+  <!-- /about -->
+
+  <!-- spacer section:stats -->
+  <section id="parallax1" class="section pad-top40 pad-bot40" data-stellar-background-ratio="0.5">
+    <div class="container">
+      <div class="align-center pad-top40 pad-bot40">
+        <blockquote class="bigquote color-white">A W E T</blockquote>
+        <p class="color-white">Aplicación Web de Extracción de Tweets</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- section works -->
+  <section id="section-works" class="section appear clearfix">
+    <div class="container">
+
+      <div class="row mar-bot40">
+        <div class="col-md-offset-3 col-md-6">
+          <div class="section-header">
+            <h2 class="section-heading animated" data-animation="bounceInUp">Datos Estadisticos</h2>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+         <div id="piechart" style="width: 900px; height: 500px;"></div>
+
+      </div>
+      <div class="row">
+        <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
+      </div>
+      <div class="row">
+        <div id="chart_div" style="width: 900px; height: 500px;"></div>
+      </div>
+      <div class="row">
+        <div id="chart_div_barra"></div>
+      </div>
+
+
+    </div>
+  </section>
+  <section id="parallax2" class="section parallax" data-stellar-background-ratio="0.5">
+    <div class="align-center pad-top40 pad-bot40">
+      <blockquote class="bigquote color-white">Indoctum accusamus comprehensam</blockquote>
+      <p class="color-white">Bootstraptaste</p>
+    </div>
+  </section>
+
+  <!-- contact -->
+  <section id="section-contact" class="section appear clearfix">
+    <div class="container">
+
+      <div class="row mar-bot40">
+        <div class="col-md-offset-3 col-md-6">
+          <div class="section-header">
+            <h2 class="section-heading animated" data-animation="bounceInUp">Contact us</h2>
+            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur, adipisci velit, sed quia non numquam.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <div class="cform" id="contact-form">
+            <div id="sendmessage">
+              Your message has been sent. Thank you!
+            </div>
+            <div id="errormessage"></div>
+            <form action="" method="post" role="form" class="contactForm">
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                <div class="validation"></div>
+              </div>
+              <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                <div class="validation"></div>
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                <div class="validation"></div>
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us"></textarea>
+                <div class="validation"></div>
+              </div>
+
+              <button type="submit" class="btn btn-theme pull-left">SEND MESSAGE</button>
+            </form>
+
+          </div>
+        </div>
+        <!-- ./span12 -->
+      </div>
+
+    </div>
+  </section>
+  <!-- map -->
+  <section id="section-map" class="clearfix">
+    <div id="google-map" data-latitude="40.713732" data-longitude="-74.0092704"></div>
+  </section>
+
+  <section id="footer" class="section footer">
+    <div class="container">
+      <div class="row animated opacity mar-bot20" data-andown="fadeIn" data-animation="animation">
+        <div class="col-sm-12 align-center">
+          <ul class="social-network social-circle">
+            <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
+            <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+            <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row align-center copyright">
+        <div class="col-sm-12">
+          <p>Copyright &copy; Amoeba</p>
+          <div class="credits">
+            <a href="">Hecho </a> por <a href="#">edisonchavezsa</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-body" id="modallisto">
+        <h2>Analizando...</h2>
+        <div id="loader"></div>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+  <a href="#header" class="scrollup"><i class="fa fa-chevron-up"></i></a>
+
+  <script src="{% static 'inicio/js/modernizr-2.6.2-respond-1.1.0.min.js'%}"></script>
+  <script src="{% static 'inicio/js/jquery.js'%}"></script>
+  <script src="{% static 'inicio/js/jquery.easing.1.3.js'%}"></script>
+  <script src="{% static 'inicio/js/bootstrap.min.js'%}"></script>
+  <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
+  <script src="{% static 'inicio/js/jquery.isotope.min.js'%}"></script>
+  <script src="{% static 'inicio/js/jquery.nicescroll.min.js'%}"></script>
+  <script src="{% static 'inicio/js/fancybox/jquery.fancybox.pack.js'%}"></script>
+  <script src="{% static 'inicio/js/skrollr.min.js'%}"></script>
+  <script src="{% static 'inicio/js/jquery.scrollTo.js'%}"></script>
+  <script src="{% static 'inicio/js/jquery.localScroll.js'%}"></script>
+  <script src="{% static 'inicio/js/stellar.js'%}"></script>
+  <script src="{% static 'inicio/js/jquery.appear.js'%}"></script>
+  <script src="{% static 'inicio/js/main.js'%}"></script>
+  <script src="{% static 'inicio/contactform/contactform.js'%}"></script>
+  <script type="text/javascript">
+  $('#formgoogle').submit(function() {
+    $('#myModal').modal('show');
+  });
+  </script>
+
+<script>
+var myVar;
+
+function myFunction() {
+    myVar = showPage;
+}
+
+function showPage() {
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("myDiv").style.display = "block";
+}
+</script>
+<script>
+  var myConfig = {
+    type: 'wordcloud',
+    options: {
+      text: '{{texto}}',
+      minLength: 5,
+      ignore: ["America", "American", "Applause", "Because", "because", "could", "don’t", "people", "That’s", "that’s", "Their", "their", "there", "these", "thing", "those", "through", "We’re", "we’re", "where", "would"],
+      maxItems: 40,
+      aspect: 'flow-center',
+      rotate: true,
+      colorType: 'palette',
+      palette: ['#D32F2F', '#5D4037', '#1976D2', '#E53935', '#6D4C41', '#1E88E5', '#F44336', '#795548', '#2196F3', '#EF5350', '#8D6E63', '#42A5F5'],
+
+      style: {
+        fontFamily: 'Crete Round',
+
+        hoverState: {
+          backgroundColor: '#D32F2F',
+          borderRadius: 2,
+          fontColor: 'white'
+        },
+        tooltip: {
+          text: '%text: %hits',
+          visible: true,
+
+          alpha: 0.9,
+          backgroundColor: '#1976D2',
+          borderRadius: 2,
+          borderColor: 'none',
+          fontColor: 'white',
+          fontFamily: 'Georgia',
+          textAlpha: 1
+        }
+      }
+    },
+
+    source: {
+      text: 'Hecho por: Edison Chavez',
+      //Source: https://obamawhitehouse.archives.gov/the-press-office/2015/03/07/remarks-president-50th-anniversary-selma-montgomery-marches
+      fontColor: '#64B5F6',
+      fontSize: 10,
+      fontFamily: 'Georgia',
+      fontWeight: 'normal',
+      marginBottom: '10%'
+    }
+  };
+
+  zingchart.render({
+    id: 'myChart',
+    data: myConfig,
+    height: 400,
+    width: '100%'
+  });
+</script>
+</body>
+
+</html>

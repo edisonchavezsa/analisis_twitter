@@ -1,0 +1,151 @@
+
+{%extends 'inicio.html'%} {%load static%} {%block contenido%}
+<script src="{%static 'js/filepicker.js'%}"></script>
+<script>
+  function initPicker() {
+    var picker = new FilePicker({
+      apiKey: 'keygoogle',
+      clientId: 'cliendidgoogle',
+      buttonEl: document.getElementById('pick'),
+      onSelect: function(file) {
+        console.log(file);
+        $("#urlarchivo").val(file.id);
+        $("#nombrearchivo").val(file.title)
+        $("#btnanalisis").removeAttr("disabled");
+      }
+    });
+  }
+</script>
+
+<script src="https://www.google.com/jsapi?key=aquivalaclavegoogle"></script>
+<script src="https://apis.google.com/js/client.js?onload=initPicker"></script>
+<link rel="stylesheet" href="{%static 'cargar/cargar.css'%}">
+<div class="row">
+  <div class="col-md-12">
+    <h4 class="page-head-line">Cargar Archivos</h4>
+
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="panel-heading">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab1default" data-toggle="tab">Cargar Archivos de GOOGLE</a></li>
+      <li><a href="#tab2default" data-toggle="tab">Cargar Archivos Excel</a></li>
+    </ul>
+  </div>
+  <div class="panel-body">
+    <div class="tab-content">
+      <div class="tab-pane fade in active" id="tab1default">
+        <form class="form-horizontal" role="form" action="/analizar" method="POST" id="formgoogle" style="margin-left:4em;">
+          {%csrf_token%}
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="form-control" id="nombrearchivo" name="nombre_archivo" readonly required>
+              <input type="hidden" class="form-control" name="urlarchivo" id="urlarchivo" readonly required>
+              <span class="input-group-btn">
+                    <button class="btn btn-success" type="button" id="pick">Cargar Archivo</button>
+               </span>
+            </div>
+
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="email">Nombre del análisis:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="nombre_analisis" name="nombre_analisis" placeholder="Ingrese un nombre de análisis" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-0 col-sm-10">
+              <button type="submit" name="analizargoogle" class="btn btn-default" id="btnanalisis" disabled>Analizar Documento</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="tab-pane fade" id="tab2default">
+        <form class="form-horizontal" method="POST" action="/analizar" enctype="multipart/form-data" style="margin-left:4em;">
+          {%csrf_token%}
+
+          <div class="form-group">
+            <div class="input-group input-file" name="Fichier1">
+              <span class="input-group-btn">
+                    <button class="btn btn-default btn-choose" type="button">Seleccione</button>
+                </span>
+              <input type="text" class="form-control" name="archivoanalizar" placeholder='Debe seleccionar un archivo excel...' />
+              <span class="input-group-btn">
+                     <button class="btn btn-warning btn-reset" type="button">Borrar</button>
+                </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="email">Nombre del análisis:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="email" name="nombreanalisis" placeholder="Ingrese un nombre de análisis" required>
+            </div>
+          </div>
+          <!-- COMPONENT END -->
+          <div class="form-group">
+            <button type="submit" name="analizarexcel" class="btn btn-primary pull-right">Analizar</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-body" id="modallisto">
+        <h2>Analizando...</h2>
+        <div id="loader"></div>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
+<script src="{%static 'js/resume.min.js'%}"></script>
+<script type="text/javascript">
+  function bs_input_file() {
+    $(".input-file").before(
+      function() {
+        if (!$(this).prev().hasClass('input-ghost')) {
+          var element = $("<input type='file' class='input-ghost' name='hola' style='visibility:hidden; height:0'>");
+          element.attr("name", $(this).attr("name"));
+          element.change(function() {
+            element.next(element).find('input').val((element.val()).split('\\').pop());
+          });
+          $(this).find("button.btn-choose").click(function() {
+            element.click();
+          });
+          $(this).find("button.btn-reset").click(function() {
+            element.val(null);
+            $(this).parents(".input-file").find('input').val('');
+          });
+          $(this).find('input').css("cursor", "pointer");
+          $(this).find('input').mousedown(function() {
+            $(this).parents('.input-file').prev().click();
+            return false;
+          });
+          return element;
+        }
+      }
+    );
+  }
+  $(function() {
+    bs_input_file();
+  });
+</script>
+<script type="text/javascript">
+$('#formgoogle').submit(function() {
+  $('#myModal').modal('show');
+});
+</script>
+
+{%endblock%}
